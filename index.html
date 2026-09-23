@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Felipe &amp; Ana · 14.02.2027</title>
+<meta name="description" content="Site do casamento de Felipe e Ana — 14 de fevereiro de 2027, na Laggus Chácara.">
+
+<!--
+  =======================================================================
+  SITE DO CASAMENTO — FELIPE & ANA
+  =======================================================================
+  Este site agora é UMA ÚNICA PÁGINA (single page). Todas as seções
+  (história, local, padrinhos, presentes, RSVP...) ficam neste mesmo
+  arquivo, uma embaixo da outra, e o menu navega entre elas usando
+  âncoras (#local, #presentes, etc.) com rolagem suave.
+
+  ARQUIVOS DO PROJETO (precisam ficar todos na mesma pasta):
+    index.html          -> este arquivo (todo o conteúdo)
+    style.css           -> toda a aparência visual
+    script.js           -> todo o comportamento (menu, contagem
+                           regressiva, presentes, RSVP)
+    images/monograma-fa.jpg  -> o monograma de vocês (enviado por vocês)
+    images/laggus.jpg        -> a ilustração da Laggus (enviada por vocês)
+
+  Os arquivos antigos padrinhos.html, contato.html e casamento.html
+  NÃO são mais usados — este único index.html substituiu todos eles.
+
+  COISAS QUE VOCÊ PROVAVELMENTE VAI QUERER EDITAR:
+    - WhatsApp, e-mail e a data/hora do casamento -> arquivo script.js,
+      logo no topo (constantes WHATSAPP_NUMBER, CONTACT_EMAIL, WEDDING_DATE)
+    - Lista de presentes -> script.js, constante GIFTS
+    - Usuário do Instagram -> aqui embaixo, na seção "CONTATO"
+    - Frase romântica do hero e o texto de "Nossa história" -> logo
+      abaixo, procure pelos comentários "Edite..."
+    - Padrinhos, traje, endereço -> também sinalizados com comentários
+
+  SOBRE OS BOTÕES DE WHATSAPP: como o site não tem servidor, "Confirmar
+  presença" e "reservar um presente" funcionam abrindo o WhatsApp do
+  CASAL com uma mensagem pronta — o convidado só confirma o envio.
+  Isso garante que vocês sempre fiquem sabendo de verdade (diferente de
+  só guardar no navegador do convidado). Detalhes nos comentários do
+  script.js.
+  =======================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================================================================
+     ÍCONES REUTILIZÁVEIS (SVG)
+     Ficam escondidos aqui e são "chamados" com <svg><use href="#nome"/></svg>.
+=================================================================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ico-gift" viewBox="0 0 48 48">
+    <rect x="8" y="20" width="32" height="20" fill="none" stroke="currentColor" stroke-width="2"/>
+    <rect x="6" y="14" width="36" height="8" fill="none" stroke="currentColor" stroke-width="2"/>
+    <line x1="24" y1="14" x2="24" y2="40" stroke="currentColor" stroke-width="2"/>
+    <path d="M24 14 C24 14 16 14 16 8 C16 4 22 4 24 14 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+    <path d="M24 14 C24 14 32 14 32 8 C32 4 26 4 24 14 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+  </symbol>
+  <symbol id="ico-heart" viewBox="0 0 48 48">
+    <path d="M24 40 C10 30 6 22 6 15 C6 9 11 5 16 5 C20 5 23 8 24 11 C25 8 28 5 32 5 C37 5 42 9 42 15 C42 22 38 30 24 40 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="ico-calendar" viewBox="0 0 48 48">
+    <rect x="6" y="10" width="36" height="32" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+    <line x1="6" y1="18" x2="42" y2="18" stroke="currentColor" stroke-width="2"/>
+    <line x1="14" y1="6" x2="14" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <line x1="34" y1="6" x2="34" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="ico-clock" viewBox="0 0 48 48">
+    <circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="2"/>
+    <line x1="24" y1="24" x2="24" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <line x1="24" y1="24" x2="32" y2="28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="ico-pin" viewBox="0 0 48 48">
+    <path d="M24 44 C24 44 38 29 38 18 C38 9.5 31.7 3 24 3 C16.3 3 10 9.5 10 18 C10 29 24 44 24 44 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="24" cy="18" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+  </symbol>
+  <symbol id="ico-car" viewBox="0 0 48 48">
+    <path d="M8 28 L11 17 a4 4 0 0 1 4 -3 h18 a4 4 0 0 1 4 3 l3 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+    <rect x="6" y="28" width="36" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="14" cy="38" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="34" cy="38" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+  </symbol>
+  <symbol id="ico-bed" viewBox="0 0 48 48">
+    <path d="M6 38 V18 a2 2 0 0 1 2 -2 h6 v10" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M6 28 h36 a2 2 0 0 1 2 2 v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+    <rect x="14" y="20" width="12" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+    <line x1="6" y1="38" x2="42" y2="38" stroke="currentColor" stroke-width="2"/>
+  </symbol>
+  <symbol id="ico-transport" viewBox="0 0 48 48">
+    <rect x="8" y="12" width="32" height="22" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+    <line x1="8" y1="22" x2="40" y2="22" stroke="currentColor" stroke-width="2"/>
+    <circle cx="16" cy="38" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="32" cy="38" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+  </symbol>
+  <symbol id="ico-chat" viewBox="0 0 48 48">
+    <path d="M8 12 h32 a4 4 0 0 1 4 4 v16 a4 4 0 0 1 -4 4 H20 l-8 8 v-8 h-4 a4 4 0 0 1 -4 -4 V16 a4 4 0 0 1 4 -4 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+    <line x1="15" y1="21" x2="33" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <line x1="15" y1="28" x2="27" y2="28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="ico-camera" viewBox="0 0 48 48">
+    <rect x="6" y="14" width="36" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="24" cy="26" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+    <path d="M17 14 L20 9 H28 L31 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="ico-mail" viewBox="0 0 48 48">
+    <rect x="6" y="10" width="36" height="28" fill="none" stroke="currentColor" stroke-width="2"/>
+    <path d="M6 12 L24 27 L42 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="deco-branch" viewBox="0 0 220 220">
+    <path d="M10 10 Q60 30 50 90" fill="none" stroke="currentColor" stroke-width="1"/>
+    <path d="M20 24 Q30 18 38 26" fill="none" stroke="currentColor" stroke-width="1"/>
+    <path d="M30 46 Q42 40 48 50" fill="none" stroke="currentColor" stroke-width="1"/>
+    <path d="M38 68 Q50 62 56 72" fill="none" stroke="currentColor" stroke-width="1"/>
+  </symbol>
+  <symbol id="flourish" viewBox="0 0 120 30">
+    <line x1="0" y1="15" x2="45" y2="15" stroke="currentColor" stroke-width="1"/>
+    <circle cx="60" cy="15" r="5" fill="none" stroke="currentColor" stroke-width="1"/>
+    <line x1="75" y1="15" x2="120" y2="15" stroke="currentColor" stroke-width="1"/>
+  </symbol>
+</svg>
+
+<!-- ===================================================================
+     CABEÇALHO / MENU
+     Links de âncora (#historia, #local...) — descem para a seção
+     correspondente na mesma página, com rolagem suave.
+=================================================================== -->
+<header class="site-header" id="siteHeader">
+  <div class="container">
+    <a href="#inicio" class="brand">
+      <img src="images/monograma-fa.jpg" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;"alt="Monograma F&amp;A" class="mono-icon">
+      Felipe &amp; Ana
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false">
+      <span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#inicio">Início</a></li>
+      <li><a href="#historia">História</a></li>
+      <li><a href="#grande-dia">O Grande Dia</a></li>
+      <li><a href="#local">Local</a></li>
+      <li><a href="#presentes">Presentes</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- ===================================================================
+     HERO — monograma, nomes e uma frase curta. Simples, de propósito.
+=================================================================== -->
+<section class="hero" id="inicio">
+  <svg class="hero-decor tl"><use href="#deco-branch"/></svg>
+  <svg class="hero-decor br"><use href="#deco-branch"/></svg>
+
+  <div class="hero-content">
+    <span class="eyebrow">Vamos nos casar</span>
+    <img src="images/monograma-fa.jpg" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover;" alt="Monograma F&amp;A" class="mono-seal-img">
+    <h1 class="couple-names">Felipe <span class="amp">&amp;</span> Ana</h1>
+    <!-- Edite esta frase à vontade -->
+    <p class="hero-phrase">Depois de tantas histórias, escrevemos juntos o próximo capítulo. Venha celebrar esse dia com a gente.</p>
+    <a href="#historia" class="btn-scroll">
+      ↓ Conheça nossa história
+    </a>
+  </div>
+</section>
+
+<!-- ===================================================================
+     NOSSA HISTÓRIA
+=================================================================== -->
+<section class="intro reveal" id="historia">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Como tudo começou</span>
+      <h2>Nossa história</h2>
+    </div>
+    <svg class="flourish"><use href="#flourish"/></svg>
+    <!-- Edite este texto com a história real de vocês dois -->
+    <p class="lede">Cada casal tem sua própria jornada — a nossa foi feita de encontros, risadas e muito aprendizado um com o outro. Ao longo do caminho, decidimos que queríamos viver o resto da nossa história juntos. Este é só o começo do que vem por aí, e queremos comemorar esse novo capítulo ao lado de quem sempre esteve com a gente.</p>
+  </div>
+</section>
+
+<!-- ===================================================================
+     O GRANDE DIA — data, horário, contagem regressiva e cronograma
+     Se a data/horário mudar, edite aqui embaixo E também a constante
+     WEDDING_DATE no arquivo script.js (é ela que move a contagem).
+=================================================================== -->
+<section class="grande-dia-section" id="grande-dia">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Guarde a data</span>
+      <h2>O grande dia</h2>
+      <p>As informações principais para você não perder nadinha.</p>
+    </div>
+
+    <div class="summary-grid reveal">
+      <div class="summary-card">
+        <svg><use href="#ico-calendar"/></svg>
+        <h3>Data</h3>
+        <p>14 de fevereiro de 2027</p>
+      </div>
+      <div class="summary-card">
+        <svg><use href="#ico-clock"/></svg>
+        <h3>Horário</h3>
+        <p>Cerimônia às 16h · Festa às 18h30</p>
+      </div>
+      <div class="summary-card">
+        <svg><use href="#ico-pin"/></svg>
+        <h3>Local</h3>
+        <p><a href="#local" style="text-decoration:underline;">Laggus Chácara</a></p>
+      </div>
+    </div>
+
+    <div class="countdown reveal" id="countdown" aria-live="polite">
+      <div class="count-box"><span class="num" id="cd-days">00</span><span class="label">dias</span></div>
+      <div class="count-box"><span class="num" id="cd-hours">00</span><span class="label">horas</span></div>
+      <div class="count-box"><span class="num" id="cd-min">00</span><span class="label">minutos</span></div>
+      <div class="count-box"><span class="num" id="cd-sec">00</span><span class="label">segundos</span></div>
+    </div>
+
+    <div class="section-head reveal" style="margin-bottom:36px;">
+      <span class="eyebrow">Passo a passo</span>
+      <h2 style="font-size:1.8rem;">Cronograma do dia</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <span class="timeline-time">15h30</span>
+        <h3>Chegada dos convidados</h3>
+        <p>Chegue com um tempinho de sobra para se acomodar antes da cerimônia.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-time">16h00</span>
+        <h3>Cerimônia</h3>
+        <p>Na capela da Laggus, à beira do lago.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-time">17h00</span>
+        <h3>Coquetel de boas-vindas</h3>
+        <p>Welcome drink e música ao vivo no jardim.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-time">18h30</span>
+        <h3>Jantar</h3>
+        <p>Menu servido à mesa, com opção vegetariana disponível.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-time">20h00</span>
+        <h3>Abertura da pista</h3>
+        <p>Nossa primeira dança — e depois é festa até altas horas!</p>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-time">00h00</span>
+        <h3>Encerramento</h3>
+        <p>Obrigado por celebrar esse dia com a gente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================================
+     LOCAL — a imagem da Laggus com destaque + botão "Como chegar"
+=================================================================== -->
+<section class="local-section" id="local">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">O cenário do nosso dia</span>
+      <h2>Onde será?</h2>
+    </div>
+
+    <div class="venue-photo-frame reveal">
+      <img src="images/laggus.jpg" alt="Ilustração da Laggus Chácara para Casamentos, Eventos, Hospedagem e Day use">
+    </div>
+
+    <div class="venue-info reveal">
+      <h3>Laggus Chácara para Casamentos, Eventos, Hospedagem e Day use</h3>
+      <!-- Endereço encontrado por busca — confirme se está correto -->
+      <p>Rua Sílvio Dallagrana, 8000 — Campo Largo, PR</p>
+      <p>Às margens da Represa do Passaúna, a cerca de 15 minutos de Curitiba.</p>
+    </div>
+
+    <div class="venue-cta reveal">
+      <!-- Link fornecido por vocês, aponta direto para o local certo no Google Maps -->
+      <a class="btn-giant"
+         href="https://www.google.com/maps/place/Laggus+Ch%C3%A1cara+para+Casamentos,+Eventos,+Hospedagem+e+Day+use/@-25.5107877,-49.3795308,17z/data=!4m6!3m5!1s0x94dd1d5b4a62c6f9:0x4772c3bda20ef120!8m2!3d-25.5112743!4d-49.3750381!16s%2Fg%2F11h1g1g77?entry=ttu&g_ep=EgoyMDI2MDgzMC4wIKXMDSoASAFQAw%3D%3D"
+         target="_blank" rel="noopener" style="border-radius: 20px; object-fit: cover;">
+        📍 Como chegar
+      </a>
+    </div>
+
+    <div class="map-frame reveal">
+      <iframe
+        src="https://www.google.com/maps?q=-25.5112743,-49.3750381&hl=pt-BR&z=15&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Mapa da Laggus Chácara">
+      </iframe>
+    </div>
+    <p class="map-caption">
+      <a class="card-link"
+         href="https://www.google.com/maps/place/Laggus+Ch%C3%A1cara+para+Casamentos,+Eventos,+Hospedagem+e+Day+use/@-25.5107877,-49.3795308,17z/data=!4m6!3m5!1s0x94dd1d5b4a62c6f9:0x4772c3bda20ef120!8m2!3d-25.5112743!4d-49.3750381!16s%2Fg%2F11h1g1g77?entry=ttu&g_ep=EgoyMDI2MDgzMC4wIKXMDSoASAFQAw%3D%3D"
+         target="_blank" rel="noopener">Abrir no Google Maps</a>
+    </p>
+
+    <div class="useful-info-grid reveal">
+      <div class="useful-info-card">
+        <svg><use href="#ico-car"/></svg>
+        <h4>Estacionamento</h4>
+        <p>A Laggus tem estacionamento próprio e gratuito para os convidados.</p>
+      </div>
+      <div class="useful-info-card">
+        <svg><use href="#ico-bed"/></svg>
+        <h4>Hospedagem</h4>
+        <p>A própria Laggus oferece casas para hospedagem no local, com capacidade para até 37 pessoas — pergunte para a gente se precisar de indicação.</p>
+      </div>
+      <div class="useful-info-card">
+        <svg><use href="#ico-transport"/></svg>
+        <h4>Transporte</h4>
+        <p>Não teremos transporte fretado. Recomendamos vir de carro ou combinar carona com outros convidados.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ===================================================================
+     TRAJE
+=================================================================== -->
+<section class="traje-section" id="traje">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Traje</span>
+      <h2>Traje</h2>
+      <p>Esporte fino / cocktail. Capriche, mas sem desconforto — a festa vai até tarde!</p>
+    </div>
+    <div class="reveal">
+      <div class="palette-swatches">
+        <div class="swatch"><span class="swatch-color" style="background:var(--caramel)"></span><span>Caramelo</span></div>
+        <div class="swatch"><span class="swatch-color" style="background:var(--brown-2)"></span><span>Marrom</span></div>
+        <div class="swatch"><span class="swatch-color" style="background:var(--sage)"></span><span>Verde sálvia</span></div>
+        <div class="swatch"><span class="swatch-color" style="background:var(--beige)"></span><span>Champagne</span></div>
+        <div class="swatch"><span class="swatch-color" style="background:var(--gold)"></span><span>Dourado</span></div>
+      </div>
+      <!-- Essas cores são só sugestões — troque pelas que preferirem -->
+      <p class="dresscode-note">Cores a evitar: branco e off-white, reservados para a noiva.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================================
+     LISTA DE PRESENTES
+     Os cards são gerados pelo script.js a partir da constante GIFTS.
+=================================================================== -->
+<section class="gifts-section" id="presentes">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Com carinho</span>
+      <h2>Lista de presentes</h2>
+      <p>Sua presença já é o nosso maior presente — mas se quiser nos ajudar a começar essa nova fase, escolha um item abaixo e reserve para você.</p>
+    </div>
+    <div class="gift-grid reveal" id="giftGrid">
+      <!-- preenchido dinamicamente pelo script.js -->
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ===================================================================
+     CONTATO
+=================================================================== -->
+<section class="contact-section" id="contato">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Fale com a gente</span>
+      <h2>Contato</h2>
+      <p>Dúvidas ou só quer mandar um carinho antecipado? Chama a gente:</p>
+    </div>
+    <div class="contact-links reveal">
+      <!-- O número de verdade fica em UM lugar só: a constante
+           WHATSAPP_NUMBER no topo do script.js. O href="#" é só um
+           placeholder — o script.js substitui automaticamente. -->
+      <a class="contact-link" id="whatsappLink" href="#" target="_blank" rel="noopener">
+        <svg><use href="#ico-chat"/></svg>
+        WhatsApp
+      </a>
+      <!-- Troque "felipeeana" pelo usuário real do Instagram -->
+      <a class="contact-link" href="https://instagram.com/felipeeana" target="_blank" rel="noopener">
+        <svg><use href="#ico-camera"/></svg>
+        @felipeeana
+      </a>
+      <!-- O e-mail de verdade fica em CONTACT_EMAIL, no topo do script.js -->
+      <a class="contact-link" id="emailLink" href="mailto:felipe.e.ana@exemplo.com">
+        <svg><use href="#ico-mail"/></svg>
+        felipe.e.ana@exemplo.com
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================================
+     RODAPÉ
+=================================================================== -->
+<footer>
+  <img src="images/monograma-fa.jpg" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" alt="Monograma F&amp;A" class="mono-icon">
+  <p class="foot-names">Felipe &amp; Ana</p>
+  <p class="foot-note">Com amor, esperamos você para celebrar esse momento conosco. ❤️</p>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
