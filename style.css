@@ -788,3 +788,84 @@ footer .foot-note{ font-size: 0.92rem; max-width: 420px; margin: 0 auto; line-he
   .btn-giant{ width: 100%; padding: 20px 28px; font-size: 1.05rem; }
   .venue-photo-frame{ border-radius: 12px; border-width: 4px; }
 }
+
+/* =====================================================================
+   FORMAS DE PRESENTEAR
+===================================================================== */
+
+.gift-extra{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 800px;
+  margin: 50px auto 0;
+}
+
+.gift-option{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 28px 24px;
+  background: var(--beige);
+  border: 1px solid rgba(176,131,79,0.25);
+}
+
+.gift-option h3{
+  margin: 0 0 12px;
+  color: var(--brown);
+  font-family: "Fraunces", serif;
+  font-size: 1.35rem;
+}
+
+.gift-option p{
+  margin: 4px 0;
+  color: var(--charcoal);
+}
+
+.pix-qrcode{
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  margin: 14px 0 18px;
+  background: #fff;
+  padding: 8px;
+  border-radius: 16px;
+}
+
+.havan-logo{
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  margin: 14px 0 18px;
+  background: #fff;
+  padding: 8px;
+  border-radius: 16px;
+}
+
+.gift-button{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  padding: 11px 20px;
+  border: 1px solid var(--brown);
+  background: var(--brown);
+  color: #fff;
+  text-decoration: none;
+  font-family: "Jost", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.gift-button:hover{
+  opacity: 0.88;
+}
+
+@media (max-width: 720px){
+  .gift-extra{
+    grid-template-columns: 1fr;
+  }
+}

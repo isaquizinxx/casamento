@@ -738,3 +738,8 @@ document.addEventListener('DOMContentLoaded', function () {
   initContactLinks();
   initRsvpForm();
 });
+
+function copiarPix() {
+  navigator.clipboard.writeText('54.451.511/0001-59');
+  alert('Chave PIX copiada!');
+}
